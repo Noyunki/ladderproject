@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Pretendard Variable", "SUIT Variable", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  background: #f4efe4;
+  color: #102018;
+}
+
+.font-display {
+  font-family: "Space Grotesk", "Pretendard Variable", "SUIT Variable", "Noto Sans KR", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(77, 124, 98, 0.22);
+  color: #102018;
+}
