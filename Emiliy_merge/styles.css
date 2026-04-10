@@ -280,7 +280,6 @@ body {
 }
 
 .scene-panel__wipe,
-.scene-panel__sparkles,
 .scene-panel__hair-focus,
 .scene-panel__comb,
 .scene-panel__needle,
@@ -306,6 +305,8 @@ body {
 
 .scene-panel__sparkles {
   inset: 6% 8% 10% 8%;
+  opacity: 1;
+  z-index: 2;
 }
 
 .scene-panel__sparkle {
@@ -314,6 +315,7 @@ body {
   top: 48%;
   inline-size: var(--sparkle-size);
   block-size: var(--sparkle-size);
+  z-index: 1;
   opacity: 0;
   transform:
     translate(-50%, -50%)
