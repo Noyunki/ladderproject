@@ -5,20 +5,9 @@
   },
   "copy": {
     "loading": "게임을 불러오는 중입니다",
-    "boardEyebrow": "Merge Puzzle",
-    "boardTitle": "같은 도구를 드래그해서 합쳐 주세요",
-    "completeEyebrow": "Makeover Complete",
-    "completeTitle": "마지막 도구가 완성됐어요",
     "counterTemplate": "{current} / {total}",
     "emptySlotLabel": "빈 슬롯",
-    "completeMessage": "청소가 모두 끝났습니다",
-    "startModalEyebrow": "Playable Ad",
-    "startModalTitle": "Cleaning Merge",
-    "startModalDescription": "같은 도구를 합쳐 청소를 끝내고 캐릭터를 변신시켜 주세요.",
     "startButtonLabel": "게임 시작",
-    "successModalEyebrow": "Success",
-    "successModalTitle": "메이크오버 완료",
-    "successModalDescription": "마지막 도구를 완성했어요. 지금 바로 이어서 플레이해 보세요.",
     "downloadButtonLabel": "Download",
     "restartButtonLabel": "다시 하기"
   },
@@ -58,7 +47,21 @@
       "buttonPrimaryBottom": "#2077df",
       "buttonPrimaryShadow": "rgba(33, 118, 222, 0.28)",
       "buttonSecondaryBackground": "rgba(225, 241, 255, 0.96)",
-      "buttonSecondaryShadow": "rgba(94, 138, 196, 0.16)"
+      "buttonSecondaryShadow": "rgba(94, 138, 196, 0.16)",
+      "boardSurfaceTop": "#f6fbff",
+      "boardSurfaceBottom": "#d8ebfb",
+      "boardSurfaceStroke": "rgba(157, 202, 239, 0.94)",
+      "boardSurfaceShadow": "rgba(72, 117, 182, 0.22)",
+      "boardPattern": "rgba(255, 255, 255, 0.42)",
+      "slotTop": "rgba(255, 255, 255, 0.96)",
+      "slotBottom": "rgba(197, 225, 251, 0.96)",
+      "slotStroke": "rgba(129, 181, 234, 0.58)",
+      "slotShadow": "rgba(77, 132, 198, 0.18)",
+      "mergeHintGlow": "rgba(89, 199, 255, 0.88)",
+      "mergeHintShadow": "rgba(66, 165, 232, 0.32)",
+      "guidedGlow": "rgba(255, 245, 120, 0.96)",
+      "guidedShadow": "rgba(255, 203, 84, 0.34)",
+      "celebrationGlow": "rgba(255, 255, 255, 0.9)"
     }
   },
   "layout": {
@@ -78,20 +81,25 @@
     "boardPadding": 16,
     "boardInnerGap": 14,
     "boardHeaderGap": 10,
-    "gridGap": 12,
-    "tileRadius": 24,
+    "boardSurfacePadding": 12,
+    "boardSurfaceRadius": 28,
+    "gridGap": 6,
+    "tileRadius": 14,
+    "slotRadius": 16,
     "counterRadius": 999,
     "progressHeight": 12,
-    "guideWidth": 88,
-    "guideOffsetX": -8,
-    "guideOffsetY": 12,
-    "floatingTileSize": 88,
+    "guideWidth": 52,
+    "guideOffsetX": -6,
+    "guideOffsetY": 8,
+    "floatingTileSize": 56,
     "overlayPadding": 24,
     "overlayCardRadius": 30,
     "overlayCardWidth": 360,
     "overlayButtonMinWidth": 132,
     "overlayButtonRadius": 999,
     "overlayButtonGap": 12,
+    "successLogoWidth": 268,
+    "celebrationParticleSize": 14,
     "mobileBreakpoint": 820
   },
   "animation": {
@@ -99,9 +107,21 @@
     "tilePopMs": 260,
     "tileMoveMs": 220,
     "guideLoopMs": 1800,
+    "mergeHintMs": 1200,
+    "guidedHintMs": 950,
     "successFadeMs": 360,
     "floatingLiftPx": 14,
-    "overlayFadeMs": 260
+    "overlayFadeMs": 260,
+    "celebrationMs": 2200
+  },
+  "effects": {
+    "successParticleCount": 12,
+    "successParticleColors": [
+      "#ffffff",
+      "#8fe3ff",
+      "#ffe57a",
+      "#8fb4ff"
+    ]
   },
   "links": {
     "downloadUrl": "",
@@ -147,6 +167,10 @@
         "path": "assets/model/finger.png",
         "alt": "드래그 가이드 손가락"
       },
+      "deactivated": {
+        "path": "assets/tools/deactivated.png",
+        "alt": "비활성 오브젝트"
+      },
       "logoStart": {
         "path": "assets/model/logo_game.png",
         "alt": "게임 로고"
@@ -162,43 +186,21 @@
     }
   },
   "board": {
-    "rows": 2,
-    "columns": 3,
+    "rows": 5,
+    "columns": 7,
     "dragThresholdPx": 12,
+    "guideAnchorRatio": 0.5,
+    "randomSpawnMaxAttempts": 24,
     "allowMoveToEmpty": true,
     "allowSwap": true,
-    "initialItems": [
+    "activeSpawnRules": [
       {
-        "row": 0,
-        "column": 0,
-        "itemId": "towel"
-      },
-      {
-        "row": 0,
-        "column": 1,
-        "itemId": "towel"
-      },
-      {
-        "row": 1,
-        "column": 0,
-        "itemId": "towel"
-      },
-      {
-        "row": 1,
-        "column": 1,
-        "itemId": "towel"
+        "itemId": "towel",
+        "min": 4,
+        "max": 4
       }
     ],
-    "guidePath": {
-      "from": {
-        "row": 0,
-        "column": 0
-      },
-      "to": {
-        "row": 0,
-        "column": 1
-      }
-    }
+    "initialItems": []
   },
   "items": [
     {
@@ -224,6 +226,8 @@
     }
   ],
   "progression": {
+    "initialProgress": 0,
+    "incrementStep": 1,
     "maxProgress": 3,
     "completeItemId": "needle",
     "states": [

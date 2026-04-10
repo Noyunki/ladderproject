@@ -31,8 +31,11 @@ const applyConfigStyles = (config) => {
     "--board-padding": `${layout.boardPadding}px`,
     "--board-inner-gap": `${layout.boardInnerGap}px`,
     "--board-header-gap": `${layout.boardHeaderGap}px`,
+    "--board-surface-padding": `${layout.boardSurfacePadding}px`,
+    "--board-surface-radius": `${layout.boardSurfaceRadius}px`,
     "--grid-gap": `${layout.gridGap}px`,
     "--tile-radius": `${layout.tileRadius}px`,
+    "--slot-radius": `${layout.slotRadius}px`,
     "--counter-radius": `${layout.counterRadius}px`,
     "--progress-height": `${layout.progressHeight}px`,
     "--guide-width": `${layout.guideWidth}px`,
@@ -45,13 +48,18 @@ const applyConfigStyles = (config) => {
     "--overlay-button-min-width": `${layout.overlayButtonMinWidth}px`,
     "--overlay-button-radius": `${layout.overlayButtonRadius}px`,
     "--overlay-button-gap": `${layout.overlayButtonGap}px`,
+    "--success-logo-width": `${layout.successLogoWidth}px`,
+    "--celebration-particle-size": `${layout.celebrationParticleSize}px`,
     "--scene-fade-ms": `${animation.sceneFadeMs}ms`,
     "--tile-pop-ms": `${animation.tilePopMs}ms`,
     "--tile-move-ms": `${animation.tileMoveMs}ms`,
     "--guide-loop-ms": `${animation.guideLoopMs}ms`,
+    "--merge-hint-ms": `${animation.mergeHintMs}ms`,
+    "--guided-hint-ms": `${animation.guidedHintMs}ms`,
     "--success-fade-ms": `${animation.successFadeMs}ms`,
     "--floating-lift-px": `${animation.floatingLiftPx}px`,
     "--overlay-fade-ms": `${animation.overlayFadeMs}ms`,
+    "--celebration-ms": `${animation.celebrationMs}ms`,
     "--board-columns": `${board.columns}`
   };
 
@@ -106,6 +114,25 @@ const loadConfig = async () => {
 };
 
 const createOverlays = ({ mount, config, onStart, onRestart, onDownload }) => {
+  const createCelebration = () => {
+    const celebration = document.createElement("div");
+    celebration.className = "game-overlay__celebration";
+
+    Array.from({ length: config.effects.successParticleCount }, (_, index) => {
+      const particle = document.createElement("span");
+      particle.className = "game-overlay__particle";
+      particle.style.setProperty("--particle-index", `${index}`);
+      particle.style.setProperty(
+        "--particle-color",
+        config.effects.successParticleColors[index % config.effects.successParticleColors.length]
+      );
+      celebration.append(particle);
+      return particle;
+    });
+
+    return celebration;
+  };
+
   const root = document.createElement("div");
   root.className = "game-overlays__root";
 
@@ -115,22 +142,10 @@ const createOverlays = ({ mount, config, onStart, onRestart, onDownload }) => {
   const startCard = document.createElement("div");
   startCard.className = "game-overlay__card";
 
-  const startEyebrow = document.createElement("p");
-  startEyebrow.className = "game-overlay__eyebrow";
-  startEyebrow.textContent = config.copy.startModalEyebrow;
-
   const startLogo = document.createElement("img");
   startLogo.className = "game-overlay__logo";
   startLogo.src = config.assets.ui.logoStart.path;
   startLogo.alt = config.assets.ui.logoStart.alt;
-
-  const startTitle = document.createElement("h2");
-  startTitle.className = "game-overlay__title";
-  startTitle.textContent = config.copy.startModalTitle;
-
-  const startDescription = document.createElement("p");
-  startDescription.className = "game-overlay__description";
-  startDescription.textContent = config.copy.startModalDescription;
 
   const startButton = document.createElement("button");
   startButton.className = "game-overlay__button game-overlay__button--primary";
@@ -142,7 +157,7 @@ const createOverlays = ({ mount, config, onStart, onRestart, onDownload }) => {
     onStart();
   });
 
-  startCard.append(startEyebrow, startLogo, startTitle, startDescription, startButton);
+  startCard.append(startLogo, startButton);
   startOverlay.append(startCard);
 
   const successOverlay = document.createElement("section");
@@ -151,27 +166,12 @@ const createOverlays = ({ mount, config, onStart, onRestart, onDownload }) => {
   const successCard = document.createElement("div");
   successCard.className = "game-overlay__card";
 
-  const successEyebrow = document.createElement("p");
-  successEyebrow.className = "game-overlay__eyebrow";
-  successEyebrow.textContent = config.copy.successModalEyebrow;
+  let successCelebration = createCelebration();
 
   const successLogo = document.createElement("img");
   successLogo.className = "game-overlay__success-art";
   successLogo.src = config.assets.ui.logoSuccess.path;
   successLogo.alt = config.assets.ui.logoSuccess.alt;
-
-  const successEffect = document.createElement("img");
-  successEffect.className = "game-overlay__success-character";
-  successEffect.src = config.assets.ui.effectSuccess.path;
-  successEffect.alt = config.assets.ui.effectSuccess.alt;
-
-  const successTitle = document.createElement("h2");
-  successTitle.className = "game-overlay__title";
-  successTitle.textContent = config.copy.successModalTitle;
-
-  const successDescription = document.createElement("p");
-  successDescription.className = "game-overlay__description";
-  successDescription.textContent = config.copy.successModalDescription;
 
   const buttonRow = document.createElement("div");
   buttonRow.className = "game-overlay__actions";
@@ -195,11 +195,8 @@ const createOverlays = ({ mount, config, onStart, onRestart, onDownload }) => {
 
   buttonRow.append(downloadButton, restartButton);
   successCard.append(
-    successEyebrow,
+    successCelebration,
     successLogo,
-    successEffect,
-    successTitle,
-    successDescription,
     buttonRow
   );
   successOverlay.append(successCard);
@@ -209,6 +206,9 @@ const createOverlays = ({ mount, config, onStart, onRestart, onDownload }) => {
 
   return {
     showSuccess() {
+      successCelebration.remove();
+      successCelebration = createCelebration();
+      successCard.prepend(successCelebration);
       successOverlay.classList.add("is-visible");
     }
   };
@@ -260,13 +260,13 @@ const bootstrap = async () => {
     },
     onRestart: () => {
       mergeGame.reset();
-      dramaScene.setProgress(0, false);
+      dramaScene.setProgress(config.progression.initialProgress, false);
       mergeGame.setInteractionEnabled(true);
     },
     onDownload: handleDownload
   });
 
-  dramaScene.setProgress(0, false);
+  dramaScene.setProgress(config.progression.initialProgress, false);
   mergeGame.reset();
   mergeGame.setInteractionEnabled(false);
 };
