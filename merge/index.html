@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Fake Merge Rescue</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app" aria-label="Fake Merge Rescue playable ad">
+      <section class="game-shell" data-state="boot">
+        <div class="backdrop" aria-hidden="true">
+          <div class="backdrop__glow backdrop__glow--left"></div>
+          <div class="backdrop__glow backdrop__glow--right"></div>
+          <div class="backdrop__grid"></div>
+        </div>
+
+        <header class="hud">
+          <div class="hud__brand" id="brandSlot" hidden>FAKE MERGE</div>
+          <div class="hud__badge" id="stateBadge">Booting</div>
+          <div class="hud__objective" id="objectiveText">
+            정답 조합을 머지해서 탐험가를 구하세요.
+          </div>
+          <div class="hud__attempts" id="attemptsText" aria-live="polite">
+            찬스 2회
+          </div>
+          <div class="hud__timer" aria-label="game progress">
+            <span>AD FLOW</span>
+            <div class="hud__track">
+              <div class="hud__fill" id="timerFill"></div>
+            </div>
+          </div>
+        </header>
+
+        <section class="scene" aria-live="polite">
+          <div class="status-card">
+            <div class="status-card__eyebrow">RESCUE MERGE</div>
+            <h1 class="status-card__title" id="headline">
+              탐험가가 얼어붙고 있어요. 서둘러 주세요.
+            </h1>
+            <p class="status-card__body" id="subline">
+              아이템 두 개를 선택하세요. 정답 조합은 단 하나입니다.
+            </p>
+            <div class="merge-tray" aria-label="Selected items">
+              <div class="merge-slot" id="slotA">?</div>
+              <div class="merge-slot merge-slot--plus" aria-hidden="true">+</div>
+              <div class="merge-slot" id="slotB">?</div>
+            </div>
+          </div>
+
+          <div class="character-stage">
+            <div class="character-stage__warning" id="warningText">DANGER</div>
+            <div class="result-badge" id="resultBadge" hidden>SUCCESS</div>
+            <div class="character-wrap" id="characterWrap">
+              <img
+                class="character-image"
+                id="characterImage"
+                alt=""
+                hidden
+              />
+              <div class="effect effect--smoke"></div>
+              <div class="effect effect--glow"></div>
+              <div class="character" id="character">
+                <div class="character__hair"></div>
+                <div class="character__face">
+                  <span class="eye eye--left"></span>
+                  <span class="eye eye--right"></span>
+                  <span class="mouth"></span>
+                </div>
+                <div class="character__torso"></div>
+                <div class="character__arm character__arm--left"></div>
+                <div class="character__arm character__arm--right"></div>
+                <div class="character__legs"></div>
+              </div>
+            </div>
+            <div class="character-stage__caption" id="characterCaption">
+              차가운 바람이 점점 더 강해지고 있어요.
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="items" id="items" role="list" aria-label="merge items"></div>
+
+          <div class="feedback">
+            <p class="feedback__text" id="feedbackText">
+              위기 연출이 끝나면 아이템 두 개를 눌러 머지하세요.
+            </p>
+            <div class="feedback__actions">
+              <button
+                class="button button--ghost"
+                id="retryButton"
+                type="button"
+                hidden
+              >
+                다시 하기
+              </button>
+              <button
+                class="button button--primary"
+                id="ctaButton"
+                type="button"
+                hidden
+              >
+                Play Now
+              </button>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./game-data.js"></script>
+    <script src="./game.js"></script>
+  </body>
+</html>

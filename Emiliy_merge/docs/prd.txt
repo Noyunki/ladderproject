@@ -1,0 +1,247 @@
+[PROJECT] Cleaning Merge Ad Prototype (Playable Ad)
+
+---
+
+1. 폴더 구조
+
+---
+
+/cleaning_merge_ad
+/assets
+background.png
+clean.png
+clean&wrapped.png
+dirty&wrapped.png
+success.png
+
+```
+face_happy.png
+hair_clean.png
+hair_messy.png
+
+logo_game.png
+logo_success.png
+
+finger.png
+
+ui_comb.png
+ui_needle.png
+ui_towel.png
+```
+
+/scenes
+dramaScene.js
+
+/puzzle
+mergeGame.js
+
+index.html
+config.json
+
+---
+
+2. 화면 구성
+
+---
+
+* 상단 40% : makeover 드라마 영역
+* 하단 60% : merge 퍼즐 영역
+
+---
+
+3. 상단 Makeover Scene
+
+---
+
+[초기 상태]
+
+* 배경: assets/background.png
+* 캐릭터: assets/dirty&wrapped.png
+* 머리: assets/hair_messy.png
+* 표정: 기본 (dirty 상태 포함)
+
+[중간 상태]
+
+* 캐릭터: assets/clean&wrapped.png
+* 머리: assets/hair_clean.png
+
+[완료 상태]
+
+* 캐릭터: assets/clean.png
+* 표정: assets/face_happy.png
+* 성공 연출: assets/success.png + logo_success.png
+
+---
+
+4. 하단 Merge 퍼즐
+
+---
+
+[조작 방식]
+
+* 드래그 기반 (필수)
+* 아이템을 끌어서 같은 아이템 위에 놓으면 merge
+
+[아이템 구조]
+
+Level 1:
+
+* id: towel
+* image: assets/ui_towel.png
+
+Level 2:
+
+* id: comb
+* image: assets/ui_comb.png
+
+Level 3:
+
+* id: needle
+* image: assets/ui_needle.png
+
+[Merge 규칙]
+
+towel + towel → comb
+comb + comb → needle
+
+needle 생성 시 → 게임 완료 트리거
+
+---
+
+5. 플레이 흐름
+
+---
+
+STEP 1
+
+* 게임 시작
+* logo_game.png 표시
+* 캐릭터 더러운 상태 등장
+
+STEP 2
+
+* finger.png 등장 (드래그 가이드)
+
+STEP 3
+
+* 유저 드래그 → merge 발생
+
+STEP 4
+
+* merge 진행도에 따라 상단 변화
+
+progress 1 → 머리 정리 (hair_clean)
+progress 2 → 옷 정리 (clean&wrapped)
+progress 3 → 완료 (clean + happy 얼굴)
+
+STEP 5
+
+* success.png 출력
+* logo_success.png 표시
+
+---
+
+6. config.json
+
+---
+
+{
+"background": "assets/background.png",
+
+"character": {
+"dirty": "assets/dirty&wrapped.png",
+"mid": "assets/clean&wrapped.png",
+"clean": "assets/clean.png"
+},
+
+"face": {
+"happy": "assets/face_happy.png"
+},
+
+"hair": {
+"messy": "assets/hair_messy.png",
+"clean": "assets/hair_clean.png"
+},
+
+"items": [
+{
+"id": "towel",
+"level": 1,
+"next": "comb",
+"image": "assets/ui_towel.png"
+},
+{
+"id": "comb",
+"level": 2,
+"next": "needle",
+"image": "assets/ui_comb.png"
+},
+{
+"id": "needle",
+"level": 3,
+"next": null,
+"image": "assets/ui_needle.png"
+}
+],
+
+"ui": {
+"guide": "assets/finger.png",
+"logoStart": "assets/logo_game.png",
+"logoSuccess": "assets/logo_success.png",
+"effectSuccess": "assets/success.png"
+}
+}
+
+---
+
+7. 핵심 로직 요약
+
+---
+
+[mergeGame.js]
+
+* 드래그 시작 → 아이템 선택
+* 드래그 종료 → 다른 아이템과 충돌 체크
+* 같은 id면 merge
+
+merge 성공 시:
+
+* 기존 2개 삭제
+* 상위 아이템 생성
+* progress++
+
+---
+
+[dramaScene.js]
+
+progress 1:
+→ hair_clean 적용
+
+progress 2:
+→ clean&wrapped 적용
+
+progress 3:
+→ clean + face_happy 적용
+→ success 연출 실행
+
+---
+
+8. 중요 포인트
+
+---
+
+* 리소스는 전부 config.json 기반으로 로딩
+* 코드 수정 없이 리소스 교체 가능
+* 광고용 확장 구조 유지
+
+---
+
+9. 목표
+
+---
+
+* 30초 내 플레이 완료
+* 드래그 3회 이내 성공 경험
+* 캐릭터 변화로 만족감 제공
+
+---

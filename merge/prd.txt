@@ -1,0 +1,261 @@
+[PRD] Fake Merge Ad - Rescue Template v2.0 (Platform Ready)
+
+---
+
+1. 프로젝트 개요
+
+* 장르: Fake Merge (광고형 퍼즐)
+* 플레이 시간: 5~10초
+* 목표:
+
+  1. Merge 기반 플레이어블 광고 제작
+  2. 리소스 교체만으로 재사용 가능한 템플릿 구축
+* 특징:
+
+  * 실제 Merge 시스템이 아닌 선택형 구조
+  * PreIntro(위기 연출) 포함
+
+---
+
+2. 핵심 컨셉
+
+* Merge는 인터랙션(UI)일 뿐
+* 실제 구조는 “선택 → 결과”
+* 정답 조합 1개, 나머지는 실패
+* 실패 연출을 통한 재시도 및 CTA 유도
+
+---
+
+3. 전체 게임 흐름
+
+PreIntro → Intro → Play → Merge → Result → CTA
+
+---
+
+4. 타임라인 (6초 기준)
+
+0.0 ~ 1.0 : PreIntro (위기 연출, 입력 비활성)
+1.0 ~ 2.0 : Intro (아이템 등장, 유도)
+2.0 ~ 4.0 : Play + Merge (유저 입력)
+4.0 ~ 5.0 : Result (성공/실패)
+5.0 ~ 6.0 : CTA 노출
+
+---
+
+5. 상태 정의
+
+Boot      : 초기 로딩
+PreIntro  : 위기 연출 (입력 불가)
+Intro     : 상황 강조 및 아이템 노출
+Play      : 유저 입력 대기
+Merge     : 조합 실행
+Result    : 결과 출력
+CTA       : 종료 및 전환
+
+---
+
+6. 인터랙션 설계
+
+* 입력 방식: Tap 2회
+
+  1. 아이템 선택 (selectedItem1)
+  2. 아이템 선택 (selectedItem2 → 자동 Merge)
+
+* 아이템 수: 3개
+
+* Merge 횟수: 1~2회
+
+---
+
+7. 게임 로직
+
+변수:
+selectedItem1
+selectedItem2
+correctPair
+gameState
+
+로직:
+
+onSelect(item):
+if selectedItem1 == null:
+selectedItem1 = item
+else:
+selectedItem2 = item
+checkMerge()
+
+checkMerge():
+if isCorrectPair(selectedItem1, selectedItem2):
+gameState = Success
+else:
+gameState = Fail
+
+isCorrectPair(a, b):
+return (a == correctPair[0] and b == correctPair[1])
+or (a == correctPair[1] and b == correctPair[0])
+
+---
+
+8. PreIntro (위기 연출)
+
+* 시작 시 자동 실행
+* 입력 비활성 상태 유지
+* 캐릭터 위기 상황 표현
+
+연출 요소:
+
+* 캐릭터 기울어짐 / 흔들림
+* 깜빡임 / 색 변화
+* 간단한 FX (연기, 빛)
+
+목적:
+
+* 유저 몰입 유도
+* 즉각적인 상황 이해
+
+---
+
+9. 연출 설계
+
+[성공]
+
+* 캐릭터 상태: 위기 → 안전
+* 밝기 상승
+* 간단 FX (Glow)
+
+[실패]
+
+* 과장된 반응
+* 짧고 강한 임팩트
+* 예: 연기, 폭발, 색 변화
+
+---
+
+10. 리소스 설계 (코덱스 프로토타입 기준)
+
+※ 1차 개발은 더미 리소스로 진행
+
+[배경]
+
+* 단색 또는 그라데이션
+
+[캐릭터]
+
+* idle (위기 상태)
+* success (초록색 등)
+* fail (빨간색 등)
+
+[아이템]
+
+* 3개
+* 색상/형태로 구분
+
+예:
+wood  : 갈색 사각형
+fire  : 빨간 원
+water : 파란 원
+
+[결과]
+
+* SUCCESS / FAIL 텍스트
+
+[CTA]
+
+* "Play Now" 버튼
+
+---
+
+11. 테스트용 데이터
+
+items:
+wood, fire, water
+
+correctPair:
+wood + fire
+
+---
+
+12. 씬 구성
+
+BG
+Character
+Item_1
+Item_2
+Item_3
+Result_Text
+CTA_Button
+
+---
+
+13. UX 흐름
+
+14. PreIntro (위기 상황)
+
+15. 아이템 등장
+
+16. 유저 2회 클릭
+
+17. 결과 즉시 출력
+
+18. CTA 노출
+
+---
+
+14. 성공 기준
+
+* 2회 클릭 내 결과 도달
+* 6초 내 종료
+* 실패 시 재시도 유도
+
+---
+
+15. 금지 사항
+
+* 인벤토리 시스템 금지
+* 다단계 Merge 금지
+* 복잡한 애니메이션 금지
+* 3회 이상 Merge 금지
+
+---
+
+16. 플랫폼 확장 구조
+
+구조:
+
+[Core Logic]
+→ Merge 처리 / 상태 관리
+
+[Template]
+→ Rescue Merge
+
+[Resource]
+→ 이미지 / 데이터 교체
+
+---
+
+17. 데이터 구조 (확장용)
+
+{
+"items": ["wood", "fire", "water"],
+"correctPair": ["wood", "fire"],
+"bg": "bg.png",
+"character": {
+"idle": "char_idle.png",
+"success": "char_success.png",
+"fail": "char_fail.png"
+}
+}
+
+---
+
+18. 개발 우선순위
+
+1) 더미 리소스로 로직 구현
+2) Rescue Merge 1판 완성
+3) 데이터 분리
+4) 리소스 교체 테스트
+
+---
+
+END
+

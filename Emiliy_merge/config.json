@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "title": "Cleaning Merge",
+    "language": "ko-KR"
+  },
+  "copy": {
+    "loading": "게임을 불러오는 중입니다",
+    "boardEyebrow": "Merge Puzzle",
+    "boardTitle": "같은 도구를 드래그해서 합쳐 주세요",
+    "completeEyebrow": "Makeover Complete",
+    "completeTitle": "마지막 도구가 완성됐어요",
+    "counterTemplate": "{current} / {total}",
+    "emptySlotLabel": "빈 슬롯",
+    "completeMessage": "청소가 모두 끝났습니다",
+    "startModalEyebrow": "Playable Ad",
+    "startModalTitle": "Cleaning Merge",
+    "startModalDescription": "같은 도구를 합쳐 청소를 끝내고 캐릭터를 변신시켜 주세요.",
+    "startButtonLabel": "게임 시작",
+    "successModalEyebrow": "Success",
+    "successModalTitle": "메이크오버 완료",
+    "successModalDescription": "마지막 도구를 완성했어요. 지금 바로 이어서 플레이해 보세요.",
+    "downloadButtonLabel": "Download",
+    "restartButtonLabel": "다시 하기"
+  },
+  "theme": {
+    "colors": {
+      "pageBackground": "#f4e7ff",
+      "frameBackground": "rgba(255, 248, 255, 0.7)",
+      "surface": "rgba(255, 255, 255, 0.84)",
+      "surfaceStrong": "rgba(255, 255, 255, 0.96)",
+      "inkPrimary": "#2b2a4c",
+      "inkSecondary": "#5c5a84",
+      "accent": "#4ba8ff",
+      "accentStrong": "#1f6fd6",
+      "accentSoft": "#d9f0ff",
+      "success": "#35b56f",
+      "shadow": "rgba(76, 49, 129, 0.2)",
+      "shadowStrong": "rgba(57, 34, 102, 0.28)",
+      "tileGlow": "rgba(255, 255, 255, 0.72)",
+      "boardBackground": "linear-gradient(180deg, rgba(248, 252, 255, 0.96) 0%, rgba(231, 244, 255, 0.96) 100%)",
+      "tileTop": "#6fc4ff",
+      "tileBottom": "#3d8df4",
+      "tileShadow": "rgba(45, 111, 204, 0.22)",
+      "tileInnerStroke": "rgba(255, 255, 255, 0.58)",
+      "emptyTileTop": "rgba(255, 255, 255, 0.72)",
+      "emptyTileBottom": "rgba(215, 234, 255, 0.8)",
+      "emptyTileStroke": "rgba(91, 140, 219, 0.16)",
+      "emptyTileShadow": "rgba(76, 132, 214, 0.08)",
+      "selectionRingInner": "rgba(255, 255, 255, 0.78)",
+      "selectionRingOuter": "rgba(31, 111, 214, 0.32)",
+      "selectionShadow": "rgba(31, 111, 214, 0.28)",
+      "overlayScrim": "rgba(35, 26, 76, 0.38)",
+      "overlayCardTop": "rgba(255, 255, 255, 0.98)",
+      "overlayCardBottom": "rgba(244, 251, 255, 0.95)",
+      "overlayCardShadow": "rgba(41, 32, 92, 0.25)",
+      "overlayCardStroke": "rgba(255, 255, 255, 0.92)",
+      "buttonPrimaryTop": "#53b7ff",
+      "buttonPrimaryBottom": "#2077df",
+      "buttonPrimaryShadow": "rgba(33, 118, 222, 0.28)",
+      "buttonSecondaryBackground": "rgba(225, 241, 255, 0.96)",
+      "buttonSecondaryShadow": "rgba(94, 138, 196, 0.16)"
+    }
+  },
+  "layout": {
+    "frameMaxWidth": 560,
+    "frameMaxHeight": 960,
+    "framePadding": 16,
+    "frameRadius": 34,
+    "panelGap": 14,
+    "sceneFlex": 42,
+    "boardFlex": 58,
+    "scenePadding": 18,
+    "hudWidth": 218,
+    "hudGap": 8,
+    "characterMaxWidth": 286,
+    "overlayLogoWidth": 240,
+    "overlaySuccessWidth": 234,
+    "boardPadding": 16,
+    "boardInnerGap": 14,
+    "boardHeaderGap": 10,
+    "gridGap": 12,
+    "tileRadius": 24,
+    "counterRadius": 999,
+    "progressHeight": 12,
+    "guideWidth": 88,
+    "guideOffsetX": -8,
+    "guideOffsetY": 12,
+    "floatingTileSize": 88,
+    "overlayPadding": 24,
+    "overlayCardRadius": 30,
+    "overlayCardWidth": 360,
+    "overlayButtonMinWidth": 132,
+    "overlayButtonRadius": 999,
+    "overlayButtonGap": 12,
+    "mobileBreakpoint": 820
+  },
+  "animation": {
+    "sceneFadeMs": 320,
+    "tilePopMs": 260,
+    "tileMoveMs": 220,
+    "guideLoopMs": 1800,
+    "successFadeMs": 360,
+    "floatingLiftPx": 14,
+    "overlayFadeMs": 260
+  },
+  "links": {
+    "downloadUrl": "",
+    "downloadTarget": "_blank"
+  },
+  "assets": {
+    "background": {
+      "path": "assets/model/background.png",
+      "alt": "맨션 배경"
+    },
+    "character": {
+      "dirty": {
+        "path": "assets/model/dirty&wrapped.png",
+        "alt": "더러운 상태의 캐릭터"
+      },
+      "mid": {
+        "path": "assets/model/clean&wrapped.png",
+        "alt": "중간 정리 상태의 캐릭터"
+      },
+      "clean": {
+        "path": "assets/model/clean.png",
+        "alt": "깨끗해진 캐릭터"
+      }
+    },
+    "hair": {
+      "messy": {
+        "path": "assets/model/hair_messy.png",
+        "alt": "헝클어진 머리"
+      },
+      "clean": {
+        "path": "assets/model/hair_clean.png",
+        "alt": "정리된 머리"
+      }
+    },
+    "face": {
+      "happy": {
+        "path": "assets/model/face_happy.png",
+        "alt": "웃는 얼굴"
+      }
+    },
+    "ui": {
+      "guide": {
+        "path": "assets/model/finger.png",
+        "alt": "드래그 가이드 손가락"
+      },
+      "logoStart": {
+        "path": "assets/model/logo_game.png",
+        "alt": "게임 로고"
+      },
+      "logoSuccess": {
+        "path": "assets/model/logo_success.png",
+        "alt": "성공 로고"
+      },
+      "effectSuccess": {
+        "path": "assets/model/success.png",
+        "alt": "성공 캐릭터"
+      }
+    }
+  },
+  "board": {
+    "rows": 2,
+    "columns": 3,
+    "dragThresholdPx": 12,
+    "allowMoveToEmpty": true,
+    "allowSwap": true,
+    "initialItems": [
+      {
+        "row": 0,
+        "column": 0,
+        "itemId": "towel"
+      },
+      {
+        "row": 0,
+        "column": 1,
+        "itemId": "towel"
+      },
+      {
+        "row": 1,
+        "column": 0,
+        "itemId": "towel"
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "itemId": "towel"
+      }
+    ],
+    "guidePath": {
+      "from": {
+        "row": 0,
+        "column": 0
+      },
+      "to": {
+        "row": 0,
+        "column": 1
+      }
+    }
+  },
+  "items": [
+    {
+      "id": "towel",
+      "level": 1,
+      "next": "comb",
+      "image": "assets/tools/ui_towel.png",
+      "label": "수건"
+    },
+    {
+      "id": "comb",
+      "level": 2,
+      "next": "needle",
+      "image": "assets/tools/ui_comb.png",
+      "label": "빗"
+    },
+    {
+      "id": "needle",
+      "level": 3,
+      "next": null,
+      "image": "assets/tools/ui_needle.png",
+      "label": "바늘"
+    }
+  ],
+  "progression": {
+    "maxProgress": 3,
+    "completeItemId": "needle",
+    "states": [
+      {
+        "progress": 0,
+        "body": "dirty",
+        "hair": "messy",
+        "face": null,
+        "headline": "먼저 수건을 합쳐 보세요",
+        "description": "같은 도구를 드래그해 겹치면 상단 메이크오버가 시작됩니다."
+      },
+      {
+        "progress": 1,
+        "body": "dirty",
+        "hair": "clean",
+        "face": null,
+        "headline": "머리가 정리되기 시작했어요",
+        "description": "한 번 더 합치면 옷까지 훨씬 깔끔해집니다."
+      },
+      {
+        "progress": 2,
+        "body": "mid",
+        "hair": "clean",
+        "face": null,
+        "headline": "거의 다 왔어요",
+        "description": "빗을 한 번 더 합쳐 마지막 도구를 만들어 주세요."
+      },
+      {
+        "progress": 3,
+        "body": "clean",
+        "hair": "clean",
+        "face": "happy",
+        "headline": "청소 완료",
+        "description": "변신 성공! 마지막 팝업에서 다음 행동을 선택할 수 있습니다."
+      }
+    ]
+  }
+}

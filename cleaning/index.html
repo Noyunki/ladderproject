@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Makeover Clean-Up Playable</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="backdrop backdrop-one"></div>
+      <div class="backdrop backdrop-two"></div>
+
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Playable Ad Prototype</p>
+          <h1>문질러서 되살리는 메이크오버 게임</h1>
+          <p class="hero-text">
+            차량, 탱크, 비행기 중 하나를 고른 뒤 알맞은 도구로 오염 레이어를 지워 보세요.
+            모바일 터치와 PC 마우스 드래그를 모두 지원합니다.
+          </p>
+        </div>
+        <div class="hero-badge">
+          <span>Scratch</span>
+          <strong>90%</strong>
+          <small>이상 정리하면 클리어</small>
+        </div>
+      </header>
+
+      <main class="app-grid">
+        <section class="selection-panel" id="selectionPanel">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">1. 대상 선택</p>
+              <h2>정리할 대상을 골라주세요</h2>
+            </div>
+            <div class="selection-summary">
+              <p class="panel-note">각 대상마다 맞는 도구가 하나씩 있습니다.</p>
+              <div class="summary-chip">
+                <span>완료한 대상</span>
+                <strong id="completedCount">0 / 3</strong>
+              </div>
+            </div>
+          </div>
+          <div class="vehicle-grid" id="vehicleGrid"></div>
+        </section>
+
+        <section class="game-panel is-hidden" id="gamePanel">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-kicker">2. 도구 선택 후 문지르기</p>
+              <h2 id="roundTitle">도구를 고르고 오염을 제거하세요</h2>
+            </div>
+            <button class="ghost-button" id="backButton" type="button">다른 대상 고르기</button>
+          </div>
+
+          <div class="hud-strip">
+            <div class="status-pill">
+              <span>선택한 대상</span>
+              <strong id="selectedVehicleLabel">-</strong>
+            </div>
+            <div class="status-pill">
+              <span>선택한 도구</span>
+              <strong id="selectedToolLabel">없음</strong>
+            </div>
+            <div class="status-pill status-pill-wide">
+              <span>힌트</span>
+              <strong id="hintText">대상을 먼저 골라주세요.</strong>
+            </div>
+          </div>
+
+          <div class="play-area">
+            <div class="stage-shell" id="stageShell">
+              <div class="meter-card">
+                <div class="meter-text">
+                  <span>정리 진행률</span>
+                  <strong id="progressValue">0%</strong>
+                </div>
+                <div class="meter-bar">
+                  <div class="meter-fill" id="progressFill"></div>
+                </div>
+              </div>
+
+              <div class="stage-frame">
+                <div class="stage" id="stage">
+                  <img id="cleanImage" alt="clean target" draggable="false" />
+                  <canvas id="dirtyCanvas" aria-label="scratch surface"></canvas>
+                  <div class="particle-layer" id="particleLayer" aria-hidden="true"></div>
+                  <div class="stage-copy" id="stageCopy">
+                    <p class="stage-copy-title">도구를 먼저 선택하세요</p>
+                    <p class="stage-copy-body">오른쪽 또는 하단 툴바에서 알맞은 도구를 고르면 문지르기가 시작됩니다.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="tool-panel">
+              <div class="tool-panel-copy">
+                <p class="panel-kicker">3. 도구 탭</p>
+                <h3>맞는 도구만 반응합니다</h3>
+              </div>
+              <div class="tool-list" id="toolList"></div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal is-hidden" id="completionModal" role="dialog" aria-modal="true" aria-labelledby="completionTitle">
+      <div class="modal-card">
+        <p class="eyebrow">Mission Complete</p>
+        <h2 id="completionTitle">메이크오버 완료</h2>
+        <p id="completionText">표면 정리가 끝났습니다. 다음 단계로 이동해 보세요.</p>
+        <div class="modal-actions">
+          <a class="cta-button" id="ctaButton" href="https://apps.apple.com/" target="_blank" rel="noreferrer">앱 스토어로 이동</a>
+          <button class="ghost-button" id="nextButton" type="button">다음 대상</button>
+          <button class="ghost-button" id="retryButton" type="button">다시 플레이</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

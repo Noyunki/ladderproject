@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Grooming &amp; Clean-up</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-frame">
+        <header class="hud">
+          <div class="hud-top">
+            <div class="logo-wrap">
+              <img id="logoImage" class="logo-image" alt="게임 로고" hidden />
+              <div id="logoFallback" class="logo-fallback">GROOMING &amp; CLEAN-UP</div>
+            </div>
+            <div class="stage-chip" id="stageChip">READY</div>
+          </div>
+          <div class="objective-panel">
+            <p class="objective-label">MISSION</p>
+            <p class="objective-text" id="objectiveText">플레이를 시작하면 오늘의 메이크오버가 시작됩니다.</p>
+          </div>
+          <div class="progress-panel">
+            <div class="progress-row">
+              <span id="progressLabel">PREP</span>
+              <span id="progressValue">0%</span>
+            </div>
+            <div class="progress-track">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="canvas-wrap">
+          <canvas id="gameCanvas" width="720" height="1280" aria-label="플레이어블 게임"></canvas>
+
+          <div class="tool-dock" id="toolDock">
+            <div class="tool-card">
+              <p class="tool-label">ACTIVE TOOL</p>
+              <button class="tool-button" id="toolButton" type="button" aria-label="현재 도구">
+                <img id="toolIcon" alt="" hidden />
+                <span id="toolFallback">TOWEL</span>
+              </button>
+              <p class="tool-hint">화면을 드래그해서 사용하세요</p>
+            </div>
+          </div>
+
+          <div class="start-screen" id="startScreen">
+            <div class="start-card">
+              <img id="startLogoImage" class="start-logo-image" alt="게임 로고" hidden />
+              <div id="startLogoFallback" class="start-logo-fallback">GROOMING &amp; CLEAN-UP</div>
+              <p class="start-copy">진흙 제거, 옷 수선, 머리 정리까지 3단계 메이크오버를 완성하세요.</p>
+              <button id="startButton" class="start-button" type="button">PLAY NOW</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./src/game.js" defer></script>
+  </body>
+</html>

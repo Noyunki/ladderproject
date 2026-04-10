@@ -1,0 +1,46 @@
+1. 프로젝트 개요
+프로젝트 명: 메이크오버 플레이어블 광고 클론 (Grooming & Clean-up)
+
+모바일 세로형 플레이어블 광고 게임을 만들어줘.
+
+게임 제목 로고:
+- 시작 화면 상단에 logo_game 표시
+- 3단계 성공 후 logo_success 표시
+
+단계 구성:
+1단계: 진흙 제거
+- 캐릭터 이미지: dirty&wrapped.png
+- 도구 UI: ui_towel.png
+- 플레이어가 캐릭터 위를 드래그하면 cleaning progress가 증가
+- progress가 100%가 되면 다음 단계로 이동
+
+2단계: 찢어진 옷 수선
+- 캐릭터는 계속 화면 중앙에 표시
+- 도구 UI: ui_needle.png
+- 옷의 찢어진 부분에 지정된 수선 포인트를 따라 드래그하면 repair progress가 증가
+- progress가 100%가 되면 다음 단계로 이동
+
+3단계: 헝클어진 머리 정리
+- 도구 UI: ui_comb.png
+- 머리 영역 위를 드래그하면 hair progress가 증가
+- progress가 100%가 되면 성공 처리
+
+성공 처리:
+- logo_success.png 출력
+- success.png 캐릭터 표시
+- 짧은 scale bounce 또는 fade-in
+- 손가락 튜토리얼은 초반에만 표시
+
+배경:
+- background.png 사용
+
+추가 요구:
+- HTML/CSS/JavaScript 또는 Phaser 기반
+- 모바일 터치 입력 지원
+- 각 단계마다 상단 또는 하단에 현재 목표 텍스트 표시
+- 드래그 중 현재 선택된 도구가 손가락을 따라다니게 만들기
+- 진행도 UI를 각 단계별로 표시
+- assets 폴더 기준으로 로드되도록 작성
+- README에 실행 방법 작성
+
+먼저 파일 구조와 구현 계획부터 제안하고, 그 다음 코드를 작성해줘.
