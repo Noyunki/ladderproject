@@ -109,12 +109,40 @@
     "guideLoopMs": 1800,
     "mergeHintMs": 1200,
     "guidedHintMs": 950,
+    "cutsceneEnterMs": 320,
+    "towelCutsceneMs": 1600,
+    "combCutsceneMs": 1400,
+    "needleCutsceneMs": 1500,
+    "cutsceneSparkleMs": 620,
+    "cutsceneExitMs": 280,
+    "cutsceneStateSwapRatio": 0.45,
     "successFadeMs": 360,
     "floatingLiftPx": 14,
     "overlayFadeMs": 260,
     "celebrationMs": 2200
   },
+  "cutscene": {
+    "stages": [1, 2, 3],
+    "combChromaKey": {
+      "redMax": 120,
+      "greenMax": 190,
+      "blueMin": 170,
+      "dominanceMin": 25,
+      "alpha": 0
+    }
+  },
   "effects": {
+    "cutsceneSparkleCount": 8,
+    "cutsceneSparkleColors": [
+      "#ffffff",
+      "#ffe57a",
+      "#9ee7ff",
+      "#ffd4f2"
+    ],
+    "cutsceneSparkleRadiusMinPx": 52,
+    "cutsceneSparkleRadiusMaxPx": 122,
+    "cutsceneSparkleSizeMinPx": 14,
+    "cutsceneSparkleSizeMaxPx": 28,
     "successParticleCount": 12,
     "successParticleColors": [
       "#ffffff",
@@ -241,8 +269,8 @@
       },
       {
         "progress": 1,
-        "body": "dirty",
-        "hair": "clean",
+        "body": "mid",
+        "hair": "messy",
         "face": null,
         "headline": "머리가 정리되기 시작했어요",
         "description": "한 번 더 합치면 옷까지 훨씬 깔끔해집니다."

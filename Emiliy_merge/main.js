@@ -56,6 +56,10 @@ const applyConfigStyles = (config) => {
     "--guide-loop-ms": `${animation.guideLoopMs}ms`,
     "--merge-hint-ms": `${animation.mergeHintMs}ms`,
     "--guided-hint-ms": `${animation.guidedHintMs}ms`,
+    "--cutscene-enter-ms": `${animation.cutsceneEnterMs}ms`,
+    "--towel-cutscene-ms": `${animation.towelCutsceneMs}ms`,
+    "--comb-cutscene-ms": `${animation.combCutsceneMs}ms`,
+    "--cutscene-exit-ms": `${animation.cutsceneExitMs}ms`,
     "--success-fade-ms": `${animation.successFadeMs}ms`,
     "--floating-lift-px": `${animation.floatingLiftPx}px`,
     "--overlay-fade-ms": `${animation.overlayFadeMs}ms`,
@@ -99,6 +103,7 @@ const createShell = () => {
 
   return {
     playable,
+    frame,
     sceneMount,
     boardMount,
     overlayMount
@@ -230,14 +235,33 @@ const bootstrap = async () => {
     config
   });
 
+  const cutsceneStages = new Set(config.cutscene.stages);
   let overlays;
+  let mergeGame;
 
-  const mergeGame = createMergeGame({
+  mergeGame = createMergeGame({
     mount: shell.boardMount,
     config,
     resolveStage,
-    onStateChange: ({ progress, completed }) => {
-      dramaScene.setProgress(progress, completed);
+    onStateChange: async ({ progress, completed, transition }) => {
+      const shouldPlayCutscene =
+        transition &&
+        cutsceneStages.has(transition.toProgress) &&
+        transition.toProgress > transition.fromProgress;
+
+      if (shouldPlayCutscene) {
+        mergeGame.setInteractionEnabled(false);
+        shell.frame.classList.add("is-cutscene");
+        await dramaScene.playCutscene(transition);
+        shell.frame.classList.remove("is-cutscene");
+
+        if (!completed) {
+          mergeGame.setInteractionEnabled(true);
+        }
+      } else {
+        dramaScene.setProgress(progress);
+      }
+
       if (completed) {
         overlays.showSuccess();
       }
@@ -256,17 +280,19 @@ const bootstrap = async () => {
     mount: shell.overlayMount,
     config,
     onStart: () => {
+      shell.frame.classList.remove("is-cutscene");
       mergeGame.setInteractionEnabled(true);
     },
     onRestart: () => {
+      shell.frame.classList.remove("is-cutscene");
       mergeGame.reset();
-      dramaScene.setProgress(config.progression.initialProgress, false);
+      dramaScene.setProgress(config.progression.initialProgress);
       mergeGame.setInteractionEnabled(true);
     },
     onDownload: handleDownload
   });
 
-  dramaScene.setProgress(config.progression.initialProgress, false);
+  dramaScene.setProgress(config.progression.initialProgress);
   mergeGame.reset();
   mergeGame.setInteractionEnabled(false);
 };

@@ -238,6 +238,7 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
   };
   let progress = config.progression.initialProgress;
   let popIndex = null;
+  let pendingTransition = null;
 
   const header = document.createElement("div");
   header.className = "board-panel__header";
@@ -345,12 +346,14 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
     guide.classList.add("is-hidden");
   };
 
-  const syncState = () => {
+  const syncState = async () => {
     updateStatus();
-    onStateChange({
+    await onStateChange({
       progress,
-      completed: dragState.completed
+      completed: dragState.completed,
+      transition: pendingTransition
     });
+    pendingTransition = null;
   };
 
   const completeIfNeeded = (mergedItemId) => {
@@ -391,12 +394,17 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
       if (!nextItemId) {
         return;
       }
+      const previousProgress = progress;
       board[sourceIndex] = null;
       board[targetIndex] = {
         itemId: nextItemId,
         disabled: false
       };
       progress += config.progression.incrementStep;
+      pendingTransition = {
+        fromProgress: previousProgress,
+        toProgress: progress
+      };
       popIndex = targetIndex;
       completeIfNeeded(nextItemId);
       return;
@@ -410,7 +418,7 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
     board[targetIndex] = sourceCell;
   };
 
-  const finishInteraction = (event) => {
+  const finishInteraction = async (event) => {
     const sourceIndex = dragState.activeIndex;
     if (sourceIndex === null) {
       return;
@@ -444,7 +452,7 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
     dragState.didDrag = false;
     clearFloatingTile();
     renderBoard();
-    syncState();
+    await syncState();
   };
 
   const handlePointerDown = (event) => {
@@ -503,7 +511,7 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
     if (activeTile) {
       activeTile.classList.remove("is-dragging");
     }
-    finishInteraction(event);
+    void finishInteraction(event);
   };
 
   const resizeObserver = new ResizeObserver(() => {
@@ -536,7 +544,7 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
     progress = config.progression.initialProgress;
     popIndex = null;
     renderBoard();
-    syncState();
+    void syncState();
   };
 
   const setInteractionEnabled = (enabled) => {
@@ -547,7 +555,7 @@ export const createMergeGame = ({ mount, config, resolveStage: resolveStageFromM
   };
 
   renderBoard();
-  syncState();
+  void syncState();
 
   return {
     reset,
